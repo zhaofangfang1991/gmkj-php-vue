@@ -18,6 +18,12 @@ use think\Exception;
 
 class Account extends BaseController
 {
+    // 前置方法
+    protected $beforeActionList = [
+        'checkAdminScope' => ['only' => 'deleteOne']
+    ];
+
+
     /**
      * 创建账号
      * params: post传过来的多个参数
@@ -49,7 +55,6 @@ class Account extends BaseController
 
     public function deleteOne($id) {
         (new IDMustBePositiveInt())->goCheck();
-        // TODO 需要权限控制
         AccountModel::destroy($id);
         return new SuccessMessage();
     }

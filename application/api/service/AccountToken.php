@@ -15,15 +15,13 @@ class AccountToken extends Token
     public function get($ac, $se)
     {
         $app = Account::check($ac, $se);
-        if(!$app)
-        {
+        if(!$app) {
             throw new TokenException([
                 'msg' => '账号密码错误，请重试',
                 'errorCode' => 10004,
                 'code' => 200
             ]);
-        }
-        else{
+        } else{
             $scope = $app->scope;
             $uid = $app->id;
             $values = [

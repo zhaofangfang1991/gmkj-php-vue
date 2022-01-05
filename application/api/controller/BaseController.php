@@ -28,8 +28,11 @@ class BaseController extends Controller
         Token::needSuperScope();
     }
 
-    // 将这个数组转换成我想要的json格式
-    protected function arrayToJson() {
-
+    // gmkj 检查管理员权限
+    protected function checkAdminScope()
+    {
+        Token::needAdminScope();
     }
+
+
 }

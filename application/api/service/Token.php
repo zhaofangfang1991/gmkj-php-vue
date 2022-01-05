@@ -76,6 +76,27 @@ class Token
             throw new TokenException();
         }
     }
+
+    /**
+     * gmkj 管理员权限
+    */
+    public static function needAdminScope()
+    {
+        $scope = self::getCurrentTokenVar('scope');
+
+        $scopeEnumClass = new ScopeEnum();
+        $adminScope = $scopeEnumClass->admin;
+
+        if ($scope){
+            if (in_array($scope, $adminScope)) {
+                return true;
+            } else {
+                throw new ForbiddenException();
+            }
+        } else {
+            throw new TokenException();
+        }
+    }
     
     public static function getCurrentTokenVar($key)
     {
