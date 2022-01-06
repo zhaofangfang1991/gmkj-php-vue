@@ -20,7 +20,7 @@ class Account extends BaseController
 {
     // 前置方法
     protected $beforeActionList = [
-        'checkAdminScope' => ['only' => 'deleteOne']
+        'checkAdminScope' => ['only' => 'deleteOne, editAccount']
     ];
 
 
@@ -93,9 +93,6 @@ class Account extends BaseController
             ]);
         }
 
-        // TODO 这个方法只允许有权限的人操作；所以，在这里要判断操作者的权限；不符合则抛出异常
-
-
         $data = $validate->getDataByRule(input());
         AccountModel::editOne($id, $data);
         return new SuccessMessage();
@@ -106,6 +103,10 @@ class Account extends BaseController
     */
     public function getChargeAccount() {
         $lists = Db::query("SELECT id,username,telnumber FROM account WHERE delete_time is NULL and type&1;");
-        return $lists;
+        $result['data'] = $lists;
+        $result['code'] = 200;
+        $result['error_code'] = 20000;
+        return $result;
     }
+
 }

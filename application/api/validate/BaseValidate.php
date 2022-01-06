@@ -39,6 +39,7 @@ class BaseValidate extends Validate
         if (!$this->check($params)) {
             $exception = new ParameterException(
                 [
+                    'code' => 200,
                     // $this->error有一个问题，并不是一定返回数组，需要判断
                     'msg' => is_array($this->error) ? implode(';', $this->error) : $this->error,
                 ]);

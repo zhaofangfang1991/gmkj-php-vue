@@ -127,3 +127,7 @@ Route::get('api/:version/tools/addressConfig', 'api/:version.Tool/getAddressConf
 Route::get('api/:version/agencys', 'api/:version.Agency/getAllAgency');
 
 
+// 4 文件上传
+Route::post('api/:version/upload', 'api/:version.Upload/uploadFile');
+
+

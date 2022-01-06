@@ -83,7 +83,7 @@ class Account extends BaseModel
             $size = $params['limit'];
         }
 //        echo self::getLastSql();
-        return self::where($map)->paginate($size);
+        return self::where($map)->where('id', '<>' , 1)->order('id', 'asc')->paginate($size);
     }
 
     /**

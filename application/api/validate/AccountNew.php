@@ -16,4 +16,8 @@ class AccountNew extends BaseValidate
         'type' => 'in: 1,2,4,8,12,10,9,6,5,3,14,13,7,11,15',
         'role_type' => 'array|require|isNotEmpty'
     ];
+
+    protected $message = [
+        'telnumber.require' => '手机号已存在',
+    ];
 }

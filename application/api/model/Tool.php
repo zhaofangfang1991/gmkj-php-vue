@@ -22,6 +22,10 @@ class Tool extends BaseModel
     public function agency() {
         return $this->belongsTo('Agency', 'agency_id', 'id');
     }
+
+    /**
+     * 添加设备流程
+     */
     public static function addTool($data) {
         // 1 检查charge_id 负责人ID
         $charge = self::hasWhere('chargeAccount',['id'=>$data['charge_id']])->find();

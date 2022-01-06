@@ -22,7 +22,7 @@ class AccountToken extends Token
                 'code' => 200
             ]);
         } else{
-            $scope = $app->scope;
+            $scope = $app->type;
             $uid = $app->id;
             $values = [
                 'scope' => $scope,

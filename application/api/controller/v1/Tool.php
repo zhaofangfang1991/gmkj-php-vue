@@ -38,10 +38,16 @@ class Tool extends BaseController
 
     // 返回保养频率配置项
     public function getServicePeriod() {
-        return config('setting.service_period_config');
+        $result['data'] = config('setting.service_period_config');
+        $result['code'] = 200;
+        $result['error_code'] = 20000;
+        return $result;
     }
     // 返回车间配置项
     public function getAddressConfig() {
-        return config('setting.address_config');
+        $result['data'] = config('setting.address_config');
+        $result['code'] = 200;
+        $result['error_code'] = 20000;
+        return $result;
     }
 }

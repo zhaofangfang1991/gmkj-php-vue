@@ -12,7 +12,10 @@ use app\api\model\Agency as agencyModel;
 class Agency extends BaseController
 {
     public function getAllAgency() {
-        return agencyModel::field('id,username,telnumber,gender,manufacturer,agent')->select();
+        $result['data'] = agencyModel::field('id,username,telnumber,gender,manufacturer,agent')->select();
+        $result['code'] = 200;
+        $result['error_code'] = 20000;
+        return $result;
     }
 }
 
