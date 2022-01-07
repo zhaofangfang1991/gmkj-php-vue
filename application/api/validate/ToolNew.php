@@ -13,18 +13,21 @@ class ToolNew extends BaseValidate
         'no' => 'require|isNotEmpty',
         'runing_status' => 'isPositiveInteger|isNotEmpty|require',
         'service_period' => 'number',
+        'pattern' => 'isNotEmpty',
         'sort' => 'number',
         'address' => 'number',
         'voltage' => 'number',
         'electric_current' => 'number',
         'power' => 'number',
-        'begin_time' => 'string',
+        'begin_time' => 'date',
         'charge_id' => 'isPositiveInteger|require',
+        'level' => 'in:1,0',
 
         // 子工具相关参数-->从客户端接收后，存成子工具
-        'subName' => 'require|isNotEmpty',
-        'subNo' => 'require|isNotEmpty',
+        'subName' => 'isNotEmpty',
+        'subNo' => 'isNotEmpty',
         'subSort' => 'number',
+        'subLevel' => 'number',
 
         /**
         文件->从客户端拿到此字段后，等工具存表成功后，

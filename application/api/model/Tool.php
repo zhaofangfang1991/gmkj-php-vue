@@ -8,10 +8,11 @@ namespace app\api\model;
 
 use app\lib\exception\ToolException;
 use app\api\model\Agency as agencyModel;
+use app\api\model\Resource as resourceModel;
 
 class Tool extends BaseModel
 {
-    public function img()
+    public function resource()
     {
         return $this->hasMany('Resource', 'belongs_id', 'id')->field('username,type');
     }
@@ -27,31 +28,34 @@ class Tool extends BaseModel
      * 添加设备流程
      */
     public static function addTool($data) {
-        // 1 检查charge_id 负责人ID
-        $charge = self::hasWhere('chargeAccount',['id'=>$data['charge_id']])->find();
-        if (!$charge) {
-            throw new ToolException([
-                'code' => 404,
-                'msg' => '负责人信息错误，请检查参数',
-                'errorCode' => 90002
-            ]);
+
+        // 1 整理数据
+        if ($data['subSort']) {
+            $subData['name'] = $data['subName'];
+            $subData['no'] = $data['subNo'];
+            $subData['sort'] = $data['subSort'];
+            $subData['level'] = $data['subLevel'];
+            unset($data['subName']);unset($data['subNo']);unset($data['subSort']);unset($data['subLevel']);
         }
 
-        // 2 检查agency_id 代理商ID 没有则添加
-        $agency_id = 0;
-        if (!key_exists('agency_id', $data)) {
-            // 没有现成的代理商，则添加
-            $agencyData['username'] = $data['agency_username'];
-            $agencyData['telnumber'] = $data['agency_telnumber'];
-            $agencyData['gender'] = $data['agency_gender'];
-            $agencyData['manufacturer'] = $data['agency_manufacturer'];
-            $agencyData['agent'] = $data['agency_agent'];
-            $agencyResult = agencyModel::create($agencyData);
-//            $agency_id = agencyModel::getLastInsID();
-            $agency_id = $agencyResult->id;
+        // 2 存当前工具
+        $addResult = self::create($data);
+        $t_id = $addResult->id;
+
+        // 3 存子工具
+        $subData['t_id'] = $t_id;
+        $addSubResult = self::create($subData);
+
+        // 4 更新文件
+        foreach ($data['pics'] as $key => $value) {
+            // TODO 这里应该用数据库的关联关系更新 不会写
+            resourceModel::where('url', '=', $value['pic'])->update(['belongs_id' =>  $t_id, 'belongs' => 1]);
         }
-        $agency_id = $agency_id?$agency_id:$data['agency_id'];
-        $result = self::create($data);
-        return $result;
+
+        return $t_id;
+    }
+
+    public static function getToolLists($page = 1, $size) {
+        return self::order('id', 'asc')->paginate($size);
     }
 }

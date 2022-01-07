@@ -122,6 +122,7 @@ Route::post('api/:version/user/:id', 'api/:version.Account/editAccount');
 Route::post('api/:version/tools', 'api/:version.Tool/createTool');
 Route::get('api/:version/tools/servicePeriod', 'api/:version.Tool/getServicePeriod');
 Route::get('api/:version/tools/addressConfig', 'api/:version.Tool/getAddressConfig');
+Route::get('api/:version/tools', 'api/:version.Tool/getAllTool');
 
 // 3 代理商管理
 Route::get('api/:version/agencys', 'api/:version.Agency/getAllAgency');

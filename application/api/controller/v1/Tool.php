@@ -24,7 +24,6 @@ class Tool extends BaseController
 
         // 2 和model交互，去写具体的流程
         $data = $validate->getDataByRule(input('post.'));
-//        $data = input('post.');
         $result = ToolModel::addTool($data);
 
         // 3 判断model执行的结果
@@ -34,6 +33,13 @@ class Tool extends BaseController
 
         // 4 返回json
         return new SuccessMessage();
+    }
+
+    public function getAllTool() {
+        $lists = ToolModel::getToolLists($page = 1, $size = 30);
+        $result['error_code'] = 20000;
+        $result['lists'] = $lists;
+        return $result;
     }
 
     // 返回保养频率配置项
