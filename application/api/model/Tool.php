@@ -19,7 +19,7 @@ class Tool extends BaseModel
 
     public function resource()
     {
-        return $this->hasMany('Resource', 'belongs_id', 'id')->field('username,type');
+        return $this->hasMany('Resource', 'belongs_id', 'id')->field('url,type');
     }
 
     public function chargeAccount() {
@@ -67,4 +67,9 @@ class Tool extends BaseModel
         }
        return self::with('subTool')->order('id', 'asc')->where($where)->paginate($limit);
     }
+
+    public static function getOneToolByID($id) {
+        return self::with('subTool,resource')->find($id);
+    }
+
 }

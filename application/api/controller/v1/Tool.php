@@ -76,7 +76,7 @@ class Tool extends BaseController
 
     public function getOneTool($id) {
         (new IDMustBePositiveInt())->goCheck();
-        $tool = ToolModel::get($id);
+        $tool = ToolModel::getOneToolByID($id);
         $result['data'] = $tool;
         $result['code'] = 200;
         $result['error_code'] = 20000;
