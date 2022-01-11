@@ -123,6 +123,8 @@ Route::post('api/:version/tools', 'api/:version.Tool/createTool');
 Route::get('api/:version/tools/servicePeriod', 'api/:version.Tool/getServicePeriod');
 Route::get('api/:version/tools/addressConfig', 'api/:version.Tool/getAddressConfig');
 Route::get('api/:version/tools', 'api/:version.Tool/getAllTool');
+Route::delete('api/:version/tool/:id', 'api/:version.Tool/deleteOne');
+Route::get('api/:version/tool/:id', 'api/:version.Tool/getOneTool');
 
 // 3 代理商管理
 Route::get('api/:version/agencys', 'api/:version.Agency/getAllAgency');

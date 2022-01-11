@@ -12,6 +12,11 @@ use app\api\model\Resource as resourceModel;
 
 class Tool extends BaseModel
 {
+    public function subTool()
+    {
+        return $this->hasMany('Tool', 't_id', 'id');
+    }
+
     public function resource()
     {
         return $this->hasMany('Resource', 'belongs_id', 'id')->field('username,type');
@@ -55,7 +60,11 @@ class Tool extends BaseModel
         return $t_id;
     }
 
-    public static function getToolLists($page = 1, $size) {
-        return self::order('id', 'asc')->paginate($size);
+    public static function getToolLists($page, $limit, $name) {
+        $where['level'] = 0;
+        if (isset($name) && !empty($name)) {
+            $where['name'] = ['like', "%" . $name . "%"];
+        }
+       return self::with('subTool')->order('id', 'asc')->where($where)->paginate($limit);
     }
 }
