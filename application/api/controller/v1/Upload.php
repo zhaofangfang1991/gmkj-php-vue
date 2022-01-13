@@ -26,7 +26,7 @@ class Upload extends BaseController
         if($file){
             $info = $file->move(ROOT_PATH . 'public' . DS . 'uploads');
             if($info){
-                $data['title'] = $info->getFilename();
+                $data['name'] = $info->getFilename();
                 $data['url'] = $info->getSaveName();
                 $data['type'] = explode('.', $info->getFilename())[1];
                 resourceModel::create($data);
@@ -34,7 +34,8 @@ class Upload extends BaseController
                 $result = [
                         "data" => [
                             "tmp_path"=> $info->getSaveName(),
-                            "url"=> "http://www.gmkj.com/uploads/" . $info->getSaveName()
+                            "url"=> "http://www.gmkj.com/uploads/" . $info->getSaveName(),
+                            "id" => resourceModel::getLastInsID()
                         ],
                         "meta" => [
                             "msg"=> "上传成功",

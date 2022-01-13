@@ -125,12 +125,18 @@ Route::get('api/:version/tools/addressConfig', 'api/:version.Tool/getAddressConf
 Route::get('api/:version/tools', 'api/:version.Tool/getAllTool');
 Route::delete('api/:version/tool/:id', 'api/:version.Tool/deleteOne');
 Route::get('api/:version/tool/:id', 'api/:version.Tool/getOneTool');
+Route::post('api/:version/tool/:id', 'api/:version.Tool/editTool');
 
 // 3 代理商管理
-Route::get('api/:version/agencys', 'api/:version.Agency/getAllAgency');
+Route::get('api/:version/agencys/[:type]', 'api/:version.Agency/getAllAgency');
+Route::post('api/:version/agency', 'api/:version.Agency/createAgency');
+Route::get('api/:version/agency/:id', 'api/:version.Agency/getAgentOne');
+Route::post('api/:version/agency/:id', 'api/:version.Agency/editAgency');
+Route::delete('api/:version/agency/:id', 'api/:version.Agency/deleteOne');
 
 
 // 4 文件上传
 Route::post('api/:version/upload', 'api/:version.Upload/uploadFile');
+Route::delete('api/:version/resource/:id', 'api/:version.Resource/deleteResource');
 
 

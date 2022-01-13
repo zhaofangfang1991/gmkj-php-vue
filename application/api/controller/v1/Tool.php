@@ -36,7 +36,7 @@ class Tool extends BaseController
         return new SuccessMessage();
     }
 
-    public function getAllTool($page, $limit, $name='') {
+    public function getAllTool($page=1, $limit=20, $name='') {
         $lists = ToolModel::getToolLists($page, $limit, $name);
         $addressConfig = config('setting.address_config');
         $servicePeriodConfig = config('setting.service_period_config');
@@ -45,7 +45,6 @@ class Tool extends BaseController
             $lists[$lKey]['service_period'] = $servicePeriodConfig[$lValue['service_period'] - 1]['label'];
 
             // 处理：如果该工具没有子工具，则显示为“无”
-
         }
 
         $result['error_code'] = 20000;
@@ -77,10 +76,39 @@ class Tool extends BaseController
     public function getOneTool($id) {
         (new IDMustBePositiveInt())->goCheck();
         $tool = ToolModel::getOneToolByID($id);
+        if ($tool['sub_tool'] != array()) {
+            $tool['subName'] = $tool['sub_tool'][0]['name'];
+            $tool['subNo'] = $tool['sub_tool'][0]['no'];
+            $tool['subSort'] = $tool['sub_tool'][0]['sort'];
+            unset($tool['sub_tool']);
+        }
+
         $result['data'] = $tool;
+        $result['data']['pics'] = array();
         $result['code'] = 200;
         $result['error_code'] = 20000;
         return $result;
+    }
 
+    public function editTool($id) {
+        (new IDMustBePositiveInt())->goCheck();
+
+        $tool = ToolModel::get($id);
+        if (!$tool) {
+            throw new ToolException([
+                'code' => 404,
+                'msg' => '设备不存在, 请检查参数',
+                'errorCode' => 90004
+            ]);
+        }
+
+        // 校验参数
+        $validate = new ToolNew();
+        $validate->goCheck();
+
+        // 2 和model交互，去写具体的流程
+        $data = $validate->getDataByRule(input('post.'));
+        ToolModel::editTool($id, $data);
+        return new SuccessMessage();
     }
 }

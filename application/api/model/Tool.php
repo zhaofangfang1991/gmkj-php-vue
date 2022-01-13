@@ -17,9 +17,9 @@ class Tool extends BaseModel
         return $this->hasMany('Tool', 't_id', 'id');
     }
 
-    public function resource()
+    public function urlLists()
     {
-        return $this->hasMany('Resource', 'belongs_id', 'id')->field('url,type');
+        return $this->hasMany('Resource', 'belongs_id', 'id');
     }
 
     public function chargeAccount() {
@@ -52,9 +52,10 @@ class Tool extends BaseModel
         $addSubResult = self::create($subData);
 
         // 4 更新文件
-        foreach ($data['pics'] as $key => $value) {
-            // TODO 这里应该用数据库的关联关系更新 不会写
-            resourceModel::where('url', '=', $value['pic'])->update(['belongs_id' =>  $t_id, 'belongs' => 1]);
+        if ($data['pics']) {
+            foreach ($data['pics'] as $key => $value) {
+                resourceModel::where('url', '=', $value['pic'])->update(['belongs_id' =>  $t_id, 'belongs' => 1]);
+            }
         }
 
         return $t_id;
@@ -69,7 +70,34 @@ class Tool extends BaseModel
     }
 
     public static function getOneToolByID($id) {
-        return self::with('subTool,resource')->find($id);
+        return self::with('subTool,urlLists')->find($id);
+    }
+
+
+    public static function editTool($id, $data) {
+        // 1 整理数据
+        if ($data['subSort']) {
+            $subData['name'] = $data['subName'];
+            $subData['no'] = $data['subNo'];
+            $subData['sort'] = $data['subSort'];
+            $subData['level'] = $data['subLevel'];
+            $subData['t_id'] = $id;
+            unset($data['subName']);unset($data['subNo']);unset($data['subSort']);unset($data['subLevel']);
+        }
+        // 2 存子工具
+        $sub_id = self::where('t_id', '=', $id)->insert($subData, true);
+
+        // 3 存当前工具
+        $addResult = self::where('id', '=', $id)->update($data);
+
+        // 4 更新文件
+        if ($data['pics']) {
+            foreach ($data['pics'] as $key => $value) {
+                resourceModel::where('url', '=', $value['pic'])->update(['belongs_id' =>  $id, 'belongs' => 1]);
+            }
+        }
+        return $id;
+
     }
 
 }

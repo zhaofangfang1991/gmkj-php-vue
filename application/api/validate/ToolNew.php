@@ -10,7 +10,7 @@ class ToolNew extends BaseValidate
 {
     protected $rule = [
         'name' => 'require|isNotEmpty',
-        'no' => 'require|isNotEmpty',
+        'no' => 'require|isNotEmpty|unique',
         'runing_status' => 'isPositiveInteger|isNotEmpty|require',
         'service_period' => 'number',
         'pattern' => 'isNotEmpty',
@@ -25,7 +25,7 @@ class ToolNew extends BaseValidate
 
         // 子工具相关参数-->从客户端接收后，存成子工具
         'subName' => 'isNotEmpty',
-        'subNo' => 'isNotEmpty',
+        'subNo' => 'isNotEmpty|unique',
         'subSort' => 'number',
         'subLevel' => 'number',
 

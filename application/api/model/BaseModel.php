@@ -27,4 +27,9 @@ class BaseModel extends Model
         }
         return $finalUrl;
     }
+
+    protected function  prefixImgUrlResource($value, $data){
+    $finalUrl = config('setting.img_prefix'). '/uploads/' .$value;
+    return $finalUrl;
+}
 }
