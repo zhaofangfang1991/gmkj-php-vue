@@ -8,7 +8,7 @@ namespace app\api\model;
 
 class Agency extends BaseModel
 {
-    protected $visible = ['id','username','telnumber','gender','agent','manufacturer'];
+    protected $visible = ['id','username','telnumber'];
     public static function getAgencyLists($type, $page, $limit, $query) {
         if ($type == 1) {
             return self::select();

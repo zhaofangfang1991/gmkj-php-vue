@@ -2,9 +2,7 @@
 /**
  *Author: zff
  */
-
 namespace app\api\model;
-
 
 use app\lib\exception\ToolException;
 use app\api\model\Agency as agencyModel;
@@ -25,6 +23,7 @@ class Tool extends BaseModel
     public function chargeAccount() {
         return $this->belongsTo('Account', 'charge_id', 'id');
     }
+
     public function agency() {
         return $this->belongsTo('Agency', 'agency_id', 'id');
     }
@@ -39,7 +38,7 @@ class Tool extends BaseModel
             $subData['name'] = $data['subName'];
             $subData['no'] = $data['subNo'];
             $subData['sort'] = $data['subSort'];
-            $subData['level'] = $data['subLevel'];
+            $subData['level'] = 1;
             unset($data['subName']);unset($data['subNo']);unset($data['subSort']);unset($data['subLevel']);
         }
 
@@ -80,9 +79,9 @@ class Tool extends BaseModel
             $subData['name'] = $data['subName'];
             $subData['no'] = $data['subNo'];
             $subData['sort'] = $data['subSort'];
-            $subData['level'] = $data['subLevel'];
+            $subData['level'] = 1;
             $subData['t_id'] = $id;
-            unset($data['subName']);unset($data['subNo']);unset($data['subSort']);unset($data['subLevel']);
+            unset($data['subName']);unset($data['subNo']);unset($data['subSort']);
         }
         // 2 存子工具
         $sub_id = self::where('t_id', '=', $id)->insert($subData, true);
@@ -97,7 +96,6 @@ class Tool extends BaseModel
             }
         }
         return $id;
-
     }
 
 }
