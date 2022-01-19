@@ -16,6 +16,7 @@ use app\api\validate\AppTokenGet;
 use app\api\validate\AccountTokenGet;
 use app\api\validate\TokenGet;
 use app\lib\exception\ParameterException;
+use app\api\model\Account as AccountModel;
 
 /**
  * 获取令牌，相当于登录
@@ -79,10 +80,13 @@ class Token
     {
         (new AccountTokenGet())->goCheck();
         $app = new AccountToken();
-        $token = $app->get($username, $password);
+        $result = $app->get($username, $password);
+        $token = $result[0];
+        $realusername = $result[1];
         return [
             'error_code' => 20000,
-            'token' => $token
+            'token' => $token,
+            'username' => $realusername
         ];
     }
 

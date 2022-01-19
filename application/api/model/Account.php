@@ -98,4 +98,6 @@ class Account extends BaseModel
         self::where('id', '=', $id)->update($data);
         return ;
     }
+
+
 }

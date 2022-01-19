@@ -139,4 +139,7 @@ Route::delete('api/:version/agency/:id', 'api/:version.Agency/deleteOne');
 Route::post('api/:version/upload', 'api/:version.Upload/uploadFile');
 Route::delete('api/:version/resource/:id', 'api/:version.Resource/deleteResource');
 
-
+// 5 巡检管理
+Route::get('api/:version/reviews', 'api/:version.Review/getAllReview');
+Route::get('api/:version/review/:id', 'api/:version.Review/getOneReview');
+Route::post('api/:version/review/:id', 'api/:version.Review/editReview');

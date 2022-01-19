@@ -24,12 +24,13 @@ class AccountToken extends Token
         } else{
             $scope = $app->type;
             $uid = $app->id;
+            $realusername = $app->username;
             $values = [
                 'scope' => $scope,
                 'uid' => $uid
             ];
             $token = $this->saveToCache($values);
-            return $token;
+            return [$token, $realusername];
         }
     }
     
