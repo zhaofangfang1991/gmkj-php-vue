@@ -143,3 +143,9 @@ Route::delete('api/:version/resource/:id', 'api/:version.Resource/deleteResource
 Route::get('api/:version/reviews', 'api/:version.Review/getAllReview');
 Route::get('api/:version/review/:id', 'api/:version.Review/getOneReview');
 Route::post('api/:version/review/:id', 'api/:version.Review/editReview');
+
+
+//  6 统计
+Route::get('api/:version/statistics', 'api/:version.Statistics/statisticsData');
+Route::get('api/:version/toolcount', 'api/:version.Statistics/toolCount');
+Route::get('api/:version/reviewcount', 'api/:version.Statistics/reviewCount'); // 柱状图 巡检数据的统计
