@@ -34,7 +34,7 @@ class Statistics extends BaseController
 
     // 以设备状态为视角统计 正常运行中1 带病运行中2 停机3
     public function toolCount() {
-        $toolCount = ToolModel::group('runing_status')->field('runing_status as name,count(*) as value')->select();
+        $toolCount = ToolModel::where('level', 0)->group('runing_status')->field('runing_status as name,count(*) as value')->select();
         $config = config('setting.runing_status');
         foreach ($toolCount as $k => $v) {
             $toolCount[$k]['name'] =  $config[$v['name']];

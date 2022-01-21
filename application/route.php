@@ -108,6 +108,8 @@ Route::post('api/:version/message/delivery', 'api/:version.Message/sendDeliveryM
 // token 登录 退出
 Route::post('api/:version/oauth/token', 'api/:version.Token/getAccountToken');
 Route::get('api/:version/oauth/token', 'api/:version.Token/accountTokenInvalid');
+Route::get('api/:version/user/info', 'api/:version.Token/getInfo');
+
 
 
 // 1 账号管理：新增账号 列表搜索

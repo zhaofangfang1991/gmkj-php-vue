@@ -17,6 +17,9 @@ use app\api\validate\AccountTokenGet;
 use app\api\validate\TokenGet;
 use app\lib\exception\ParameterException;
 use app\api\model\Account as AccountModel;
+use app\lib\exception\TokenException;
+use think\Cache;
+use think\Request;
 
 /**
  * 获取令牌，相当于登录
@@ -96,5 +99,55 @@ class Token
             'error_code' => 20000,
             'msg' => '退出成功'
         ];
+    }
+
+    // 通过token获取用户信息
+    public function getInfo() {
+
+        $token = Request::instance()
+            ->header('token');
+        $identities = Cache::get($token);
+        if (!$identities)
+        {
+            throw new TokenException();
+        }
+        else {
+            $identities = json_decode($identities, true);
+//            var_dump($identities);
+
+            $config = [
+                8 => ['admin'],
+                4 => ['fix'],
+                2 => ['review'],
+                1 => ['charge'],
+                12 => ['admin', 'fix'],
+                10 => ['admin', 'review'],
+                9 => ['admin', 'charge'],
+                6 => ['fix', 'review'],
+                5 => ['fix', 'charge'],
+                3 => ['review', 'charge'],
+                14 => ['admin', 'fix', 'review'],
+                13 => ['admin', 'fix', 'charge'],
+                11 => ['admin', 'review', 'charge'],
+                7 => ['fix', 'review', 'charge'],
+                15 => ['admin', 'fix', 'review', 'charge']
+            ];
+
+            // 当前登录者的名字
+            $auth = AccountModel::field('username')->find($identities['uid']);
+
+            $data = [
+                'roles' => $config[$identities['scope']],
+                'introduction' => $auth['username'],
+                'avatar' => 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
+                'name' => $auth['username'],
+            ];
+            $result['data'] = $data;
+
+            return [
+                'error_code' => 20000,
+                'data' => $data
+            ];
+        }
     }
 }
