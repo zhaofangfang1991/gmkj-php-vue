@@ -80,10 +80,8 @@ class Account extends BaseController
                 'errorCode' => 60003
             ]);
         }
-
         $validate = new AccountUpdate();
         $validate->goCheck();
-
         $uniqueReslt = $validate->isUniqueExceptMe('account', $id, 'telnumber', $telnumber);
         if ($uniqueReslt) {
             throw new AccountException([
@@ -93,7 +91,9 @@ class Account extends BaseController
             ]);
         }
 
-        $data = $validate->getDataByRule(input());
+//        $data = $validate->getDataByRule(input());
+        $data = input('post.');
+
         AccountModel::editOne($id, $data);
         return new SuccessMessage();
     }

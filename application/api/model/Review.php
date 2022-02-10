@@ -16,9 +16,14 @@ class Review extends BaseModel
         return $this->belongsTo('Tool', 't_id', 'id')->field('id,name,no');
     }
 
-    // 与account表的关联模型
+    // 与account表的关联模型-实际操作人
     public function reviewAccount() {
         return $this->belongsTo('Account', 'review_id', 'id')->field('id,username,telnumber');
+    }
+
+    // 与account表的关联模型-预定义操作人
+    public function prereviewAccount() {
+        return $this->belongsTo('Account', 'pre_review_id', 'id')->field('id,username,telnumber');
     }
 
     /**
@@ -33,7 +38,7 @@ class Review extends BaseModel
 
         $map = array();
         if (array_key_exists('review_time', $params) and !empty($params['review_time'])) {
-            $map['review_time'] = $params['review_time'] ;
+            $map['review_time'] = ['like', $params['review_time'] . "%"];
         }
         if (array_key_exists('status', $params) and !empty($params['status'])) {
             $map['status'] = $params['status'];
@@ -46,8 +51,7 @@ class Review extends BaseModel
         if (array_key_exists('limit', $params)) {
             $size = $params['limit'];
         }
-//        echo self::getLastSql();
-        return self::hasWhere('tool',['name'=>$tool['name']])->where($map)->with('tool,reviewAccount')->order('status', 'asc')->paginate($size);
+        return self::hasWhere('tool',['name'=>$tool['name']])->where($map)->with('tool,reviewAccount,prereviewAccount')->order('status', 'asc')->paginate($size);
     }
 
     public static function getOneReviewByID($id) {

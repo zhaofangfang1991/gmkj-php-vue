@@ -13,7 +13,7 @@ class AccountNew extends BaseValidate
         'telnumber' => 'require|isMobile|unique:Account',
         'password' => 'require|max:10',
         'gender' => 'isGender',
-        'type' => 'in: 1,2,4,8,12,10,9,6,5,3,14,13,7,11,15',
+        'type' => 'in: 1,2,4,6,5,3,7',
         'role_type' => 'array|require|isNotEmpty'
     ];
 

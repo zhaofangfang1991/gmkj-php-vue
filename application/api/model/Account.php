@@ -12,6 +12,7 @@ use think\Exception;
 class Account extends BaseModel
 {
     protected $deleteTime = 'delete_time';
+    protected $visible =  ['id', 'username', 'telnumber' ,'gender', 'type','status','role_type'];
 
     /*
         select * from account where (username = $ac and app_secret = )

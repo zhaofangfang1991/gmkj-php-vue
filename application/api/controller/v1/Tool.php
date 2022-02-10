@@ -12,6 +12,7 @@ use app\api\validate\ToolNew;
 use app\api\model\Tool as ToolModel;
 use app\lib\exception\SuccessMessage;
 use app\lib\exception\ToolException;
+use app\api\model\Review as ReviewModel;
 
 class Tool extends BaseController
 {
@@ -70,6 +71,8 @@ class Tool extends BaseController
     public function deleteOne($id) {
         (new IDMustBePositiveInt())->goCheck();
         ToolModel::destroy($id);
+        // 删除相关的巡检数据
+        ReviewModel::destroy(['t_id' => $id]);
         return new SuccessMessage();
     }
 
