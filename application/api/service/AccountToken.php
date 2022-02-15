@@ -30,7 +30,7 @@ class AccountToken extends Token
                 'uid' => $uid
             ];
             $token = $this->saveToCache($values);
-            return [$token, $realusername];
+            return [$token, $realusername, $uid];
         }
     }
     

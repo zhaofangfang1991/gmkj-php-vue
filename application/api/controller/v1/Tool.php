@@ -114,4 +114,14 @@ class Tool extends BaseController
         ToolModel::editTool($id, $data);
         return new SuccessMessage();
     }
+
+    /**
+     * 维修单的设备列表
+    */
+    public function getToolListsForRepair($name='', $type=2) {
+        $lists = ToolModel::getToolLists($page=1, $limit=1,$name, $type=2);
+        $result['error_code'] = 20000;
+        $result['lists'] = $lists;
+        return $result;
+    }
 }

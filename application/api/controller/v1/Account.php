@@ -99,7 +99,7 @@ class Account extends BaseController
     }
 
     /**
-     * 获取有设备管理员权限的账号列表
+     * 获取有设备操作员权限的账号列表
     */
     public function getChargeAccount() {
         $lists = Db::query("SELECT id,username,telnumber FROM account WHERE delete_time is NULL and type&1;");
@@ -108,6 +108,15 @@ class Account extends BaseController
         $result['error_code'] = 20000;
         return $result;
     }
-
+    /**
+     * 获取有维修权限的账号列表
+     */
+    public function getRepairAccount() {
+        $lists = Db::query("SELECT id,username,telnumber FROM account WHERE delete_time is NULL and type&2;");
+        $result['data'] = $lists;
+        $result['code'] = 200;
+        $result['error_code'] = 20000;
+        return $result;
+    }
 
 }

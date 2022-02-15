@@ -60,12 +60,16 @@ class Tool extends BaseModel
         return $t_id;
     }
 
-    public static function getToolLists($page, $limit, $name) {
+    public static function getToolLists($page, $limit, $name, $type=1) {
         $where['level'] = 0;
         if (isset($name) && !empty($name)) {
             $where['name'] = ['like', "%" . $name . "%"];
         }
-       return self::with('subTool')->order('id', 'asc')->where($where)->paginate($limit);
+        if ($type !=2) {
+            return self::with('subTool')->order('id', 'asc')->where($where)->paginate($limit);
+        } else {
+            return self::order('id', 'asc')->where($where)->field('id,name,no')->select();
+        }
     }
 
     public static function getOneToolByID($id) {
