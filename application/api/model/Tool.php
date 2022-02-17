@@ -7,6 +7,7 @@ namespace app\api\model;
 use app\lib\exception\ToolException;
 use app\api\model\Agency as agencyModel;
 use app\api\model\Resource as resourceModel;
+use app\api\model\Maintenance as MaintenanceModel;
 
 class Tool extends BaseModel
 {
@@ -56,6 +57,9 @@ class Tool extends BaseModel
                 resourceModel::where('url', '=', $value['pic'])->update(['belongs_id' =>  $t_id, 'belongs' => 1]);
             }
         }
+
+        // 5 增加一条保养数据
+        MaintenanceModel::bornNextMaintenance($t_id, $data['service_period']);
 
         return $t_id;
     }

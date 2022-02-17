@@ -45,7 +45,6 @@ class Repair extends BaseController
         return $result;
     }
 
-
     public function getOneRepair($id) {
         (new IDMustBePositiveInt())->goCheck();
         $repair = RepairModel::getOneRepairByID($id);

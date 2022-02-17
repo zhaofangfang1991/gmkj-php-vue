@@ -6,10 +6,10 @@
 namespace app\api\validate;
 
 
-class Review extends BaseValidate
+class Maintenance extends BaseValidate
 {
     protected $rule = [
-        'review_result' => 'require|in: 1,2',
+        'level' => 'require|in: 1,2,3,4',
         'content' => 'require|isNotEmpty',
     ];
 }

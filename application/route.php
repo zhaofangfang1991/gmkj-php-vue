@@ -72,4 +72,9 @@ Route::get('api/:version/repairs', 'api/:version.Repair/getAllRepair');
 Route::get('api/:version/repair/:id', 'api/:version.Repair/getOneRepair');
 Route::post('api/:version/repair/:id', 'api/:version.Repair/editOneRepair');
 
+// 8 保养维护 maintenance Maintenance
+Route::get('api/:version/maintenances', 'api/:version.Maintenance/getAllMaintenance');
+Route::get('api/:version/maintenance/:id', 'api/:version.Maintenance/getOneMaintenance');
+Route::post('api/:version/maintenance/:id', 'api/:version.Maintenance/editOneMaintenance');
+
 

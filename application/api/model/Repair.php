@@ -11,9 +11,6 @@ use app\api\model\Account as AccountModel;
 
 class Repair extends BaseModel
 {
-    protected $autoWriteTimestamp = true;
-    protected $updateTime = 'update_time';
-
     // 与设备的关联模型
     public function tool() {
         return $this->belongsTo('Tool', 'tool_id', 'id')->field('id,name,no');
@@ -86,6 +83,7 @@ class Repair extends BaseModel
         // 通过token获取当前登录用户的id--实际操作人
         $uid = TokenService::getCurrentUid();
         $data['real_repair'] = $uid;
+        $data['repair_time'] = date('Y-m-d H:i:s');
 
         self::where('id', '=', $id)->update($data);
 

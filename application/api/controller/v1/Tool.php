@@ -44,8 +44,6 @@ class Tool extends BaseController
         foreach ($lists as $lKey => $lValue) {
             $lists[$lKey]['address'] = $addressConfig[$lValue['address'] - 1]['label'];
             $lists[$lKey]['service_period'] = $servicePeriodConfig[$lValue['service_period'] - 1]['label'];
-
-            // 处理：如果该工具没有子工具，则显示为“无”
         }
 
         $result['error_code'] = 20000;
