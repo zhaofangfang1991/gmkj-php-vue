@@ -77,4 +77,7 @@ Route::get('api/:version/maintenances', 'api/:version.Maintenance/getAllMaintena
 Route::get('api/:version/maintenance/:id', 'api/:version.Maintenance/getOneMaintenance');
 Route::post('api/:version/maintenance/:id', 'api/:version.Maintenance/editOneMaintenance');
 
+// 9 备件管理
+Route::post('api/:version/parts', 'api/:version.Parts/createParts');
+Route::get('api/:version/parts', 'api/:version.Parts/getAllParts');
 

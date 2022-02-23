@@ -4,8 +4,6 @@
  */
 namespace app\api\model;
 
-use app\lib\exception\ToolException;
-use app\api\model\Agency as agencyModel;
 use app\api\model\Resource as resourceModel;
 use app\api\model\Maintenance as MaintenanceModel;
 
