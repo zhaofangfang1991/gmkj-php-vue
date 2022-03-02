@@ -64,7 +64,9 @@ Route::post('api/:version/review/:id', 'api/:version.Review/editReview');
 Route::get('api/:version/statistics', 'api/:version.Statistics/statisticsData');
 Route::get('api/:version/toolcount', 'api/:version.Statistics/toolCount');
 Route::get('api/:version/reviewcount', 'api/:version.Statistics/reviewCount'); // 柱状图 巡检数据的统计
-
+Route::get('api/:version/reviewcount', 'api/:version.Statistics/reviewCount'); // 柱状图 巡检数据的统计
+Route::get('api/:version/mostrepair', 'api/:version.Statistics/mostRepair'); // 横向柱状图 获取维修次数最多的5种设备
+Route::get('api/:version/mostuseparts', 'api/:version.Statistics/mostUseParts'); // 横向柱状图 获取维修次数最多的5种设备
 
 // 7 维修
 Route::post('api/:version/repair', 'api/:version.Repair/createRepair');
@@ -80,4 +82,8 @@ Route::post('api/:version/maintenance/:id', 'api/:version.Maintenance/editOneMai
 // 9 备件管理
 Route::post('api/:version/parts', 'api/:version.Parts/createParts');
 Route::get('api/:version/parts', 'api/:version.Parts/getAllParts');
+Route::post('api/:version/parts/:id', 'api/:version.Parts/addNum'); // 修改仓库数量
+
+// 10  备件管理-领用备件
+Route::post('api/:version/partsuse/:id', 'api/:version.PartsUse/editPartsUse');
 

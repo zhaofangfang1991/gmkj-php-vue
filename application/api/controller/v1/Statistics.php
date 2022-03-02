@@ -10,6 +10,9 @@ use app\api\controller\BaseController;
 use app\api\model\Account as AccountModel;
 use app\api\model\Tool as ToolModel;
 use app\api\model\Review as ReviewModel;
+use app\api\model\Repair as RepairModel;
+use app\api\model\Agency as AgencyModel;
+use app\api\model\Maintenance as MaintenanceModel;
 use think\Db;
 
 class Statistics extends BaseController
@@ -27,6 +30,17 @@ class Statistics extends BaseController
 
         // 过期未巡检总数
         $result['data']['overreview'] = ReviewModel::where('status', '=', 3)->count();
+
+        // 今日待检
+        $result['data']['today_review'] = ReviewModel::where('status', '=', 1)->count();
+        // 供应商总数
+        $result['data']['agent_count'] = AgencyModel::where('status', '=', 1)->count();
+        // 累计报修
+        $result['data']['repair_count'] = RepairModel::count();
+        // 维修中工单数 repairing
+        $result['data']['repairing'] = RepairModel::where('status', 1)->count();
+        // 今日待完成保养任务数
+        $result['data']['maintenance'] = MaintenanceModel::where('status', 1)->count();
 
         $result['error_code'] = 20000;
         return $result;
@@ -58,6 +72,23 @@ class Statistics extends BaseController
             $count['over'][] = ReviewModel::where('review_time', 'like', "%".$v."%")->where('status', '3')->count(); // 过期未完成
         }
         $result['data'] = $count;
+        $result['error_code'] = 20000;
+        return $result;
+    }
+
+    // 获取维修次数最多的5种设备
+    public function mostRepair() {
+        $result['data'] = RepairModel::query("SELECT  tool_id, count(*) as num, `name` from `repair`  r LEFT 
+        JOIN tool t  ON  t.id =  r.tool_id GROUP BY  tool_id ORDER BY  num asc limit 5;");
+        $result['error_code'] = 20000;
+        return $result;
+    }
+
+    // 获取领用次数最多的5种备件
+    public function mostUseParts() {
+        $result['data'] = Db::query("SELECT p_id, count(*) as num,p.`name` FROM parts_use pu 
+        LEFT JOIN parts p ON p.id = pu.p_id GROUP BY p_id ORDER BY num asc limit 5;
+        ");
         $result['error_code'] = 20000;
         return $result;
     }
